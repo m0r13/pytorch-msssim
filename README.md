@@ -49,9 +49,18 @@ print(m(img1, img2))
 
 ### Training
 
-For a detailed example on how to use msssim for training, look at the file max_ssim.py.
+For a detailed example on how to use msssim for optimization, look at the file max_ssim.py.
 
-We recommend using the flag normalized=True when training unstable models using MS-SSIM (for example, Generative Adversarial Networks) as it will guarantee that at the start of the training procedure, the MS-SSIM will not provide NaN results.
+
+### Stability and normalization
+
+MS-SSIM is a particularly unstable metric when used for some architectures and may result in NaN values early on during the training. The msssim method provides a normalize attribute to help in these cases. There are three possible values. We recommend using the value normalized="relu" when training. 
+
+- None : no normalization method is used and should be used for evaluation
+- "relu" : the `ssim`and `mc` values of each level during the calculation are rectified using a relu ensuring that negative values are zeroed
+- "simple" : the `ssim`result of each iteration is averaged with 1 for an expected lower bound of 0.5 - should ONLY be used for the initial iterations of your training or when averaging below 0.6 normalized score
+
+Currently and due to backward compability, a value of True will equal the "simple" normalization.
 
 ## Reference
 https://ece.uwaterloo.ca/~z70wang/research/ssim/
