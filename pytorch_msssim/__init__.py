@@ -1,3 +1,4 @@
+from functools import lru_cache
 import torch
 import torch.nn.functional as F
 from math import exp
@@ -9,6 +10,7 @@ def gaussian(window_size, sigma):
     return gauss/gauss.sum()
 
 
+@lru_cache(maxsize=64, typed=True)
 def create_window(window_size, channel=1):
     _1D_window = gaussian(window_size, 1.5).unsqueeze(1)
     _2D_window = _1D_window.mm(_1D_window.t()).float().unsqueeze(0).unsqueeze(0)
