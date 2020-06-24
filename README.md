@@ -3,7 +3,7 @@
 ### Differentiable Multi-Scale Structural Similarity (SSIM) index 
 
 This small utiliy provides a differentiable MS-SSIM implementation for PyTorch based on Po Hsun Su's implementation of SSIM @ https://github.com/Po-Hsun-Su/pytorch-ssim.
-At the moment only a direct method is supported.
+At the moment only the product method for MS-SSIM is supported.
 
 ## Installation
 
