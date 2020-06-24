@@ -33,7 +33,6 @@ git checkout tags/checkpoint-0.3
 ```python
 import pytorch_msssim
 import torch
-from torch.autograd import Variable
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 m = pytorch_msssim.MSSSIM()
@@ -49,7 +48,7 @@ print(m(img1, img2))
 
 ### Training
 
-For a detailed example on how to use msssim for optimization, look at the file max_ssim.py.
+For a detailed example on how to use msssim for optimization, take a look at the file max_ssim.py.
 
 
 ### Stability and normalization
@@ -67,4 +66,4 @@ https://ece.uwaterloo.ca/~z70wang/research/ssim/
 
 https://github.com/Po-Hsun-Su/pytorch-ssim
 
-Thanks to z70wang for providing the initial SSIM implementation and all the contributors with fixes to this fork.
+Thanks to z70wang for proposing MS-SSIM and providing the initial implementation, and Po-Hsun-Su for the initial differentiable SSIM implementation for Pytorch. 
