@@ -1,7 +1,9 @@
 from pytorch_msssim import msssim, ssim
 import torch
 from torch import optim
-from scipy.misc import imread
+
+from PIL import Image
+from torchvision.transforms.functional import to_tensor
 import numpy as np
 
 # display = True requires matplotlib
@@ -16,18 +18,10 @@ def post_process(img):
     return img
 
 # Preprocessing
-np_img1 = imread('einstein.png')
+img1 = to_tensor(Image.open('einstein.png')).unsqueeze(0).type(torch.FloatTensor)
 
-if len(np_img1.shape) == 2:                  # if no channel dimension exists
-    np_img1 = np.expand_dims(np_img1, axis=-1)
-np_img1 = np.transpose(np_img1, (2, 0, 1))   # adjust dimensions for pytorch
-np_img1 = np.expand_dims(np_img1, axis=0)    # add batch dimension
-np_img1 = np_img1 / 255.0                    # normalize values between 0-1
-np_img1 = np_img1.astype(np.float32)         # adjust type
-
-img1 = torch.from_numpy(np_img1)
 img2 = torch.rand(img1.size())
-img2 = torch.nn.functional.sigmoid(img2)     # use sigmoid to map values between 0-1
+img2 = torch.nn.functional.sigmoid(img2)     # use sigmoid to clamp between [0, 1]
 
 img1 = img1.to(device)
 img2 = img2.to(device)
