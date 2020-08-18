@@ -32,7 +32,7 @@ def ssim(img1, img2, window_size=11, window=None, size_average=True, full=False,
     else:
         L = val_range
 
-    padd = 0
+    padd = (window_size-1) // 2
     (_, channel, height, width) = img1.size()
     if window is None:
         real_size = min(window_size, height, width)
@@ -64,7 +64,7 @@ def ssim(img1, img2, window_size=11, window=None, size_average=True, full=False,
         ret = ssim_map.mean(1).mean(1).mean(1)
 
     if full:
-        return ret, cs
+        return ret, cs, ssim_map
     return ret
 
 
